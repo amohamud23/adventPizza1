@@ -1,33 +1,39 @@
 import React, { useState, useEffect } from "react";
 import { MusicController } from "adventure-component-library";
-import axios from 'axios';
+import axios from "axios";
 
-//var userAddress;
+const compDiv = {
+  background: "#87E1C7",
+  color: "black",
+  padding: "15px",
+  borderRadius: "25px",
+  fontFamily: "Arial",
+  border: "solid black 4px",
+  boxShadow: "5px 7px 15px grey inset",
+};
 
+var address;
 
+const sendAPIRequest = (address) => {
+  console.log("address API: " + address);
 
-
-const sendAPIRequest = (walletAddress) => {
-  console.log("userAddress API BF: " + JSON.stringify(walletAddress));
-
-  window.alert('Obtained 5 BEAR Token');
+  window.alert("Obtained 5 BEAR Token");
   var apiAddress;
   apiAddress = "http://13.56.163.182:8000/transfer-token";
-  axios.post(apiAddress, {
+  axios
+    .post(apiAddress, {
       ticker: "BEAR",
       amount: 5,
-      to: walletAddress,
+      to: address,
       hookUrl: "done",
-  })
-      .then(function (response) {
-          console.log(response);
-      })
-      .catch(function (error) {
-          console.log(error);
-      });
-}
-
-
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
 
 const songData = {
   "we used to talk every night": {
@@ -107,9 +113,6 @@ const songData = {
 
 //////////// ^song info  ////////////
 
-
-
-
 const songArr = Object.values(songData);
 
 const MyComponent = (props) => {
@@ -117,9 +120,9 @@ const MyComponent = (props) => {
   const [songPlayingIndex, setSongPlayingIndex] = useState(0);
   const song = songArr[songPlayingIndex];
   const [audio, setAudio] = useState(new window.Audio(song.url));
-  console.log("MyComp log: " + JSON.stringify(props.walletAddress));
-  console.log("props log: " + props);
 
+  address = props.walletAddress;
+  console.log("address myComp log: " + address);
 
   const onClickPrevSong = () => {
     let newSongIndex = songPlayingIndex - 1;
@@ -137,11 +140,11 @@ const MyComponent = (props) => {
     setSongPlayingIndex(newSongIndex);
   };
 
-  
   /////// onEndAudio Func ///////
   const onEndAudio = () => {
-    console.log("onEndAudio song ended")
-    sendAPIRequest(props.walletAddress);
+    console.log("onEndAudio song ended");
+    console.log("address: " + address);
+    sendAPIRequest(address);
     onTogglePlaySong();
   };
 
@@ -151,12 +154,7 @@ const MyComponent = (props) => {
   }, []);
   ///////////////////////////////
 
-
-
-
-
-
-// Pause ===> unPause
+  // Pause ===> unPause //
   const onTogglePlaySong = () => {
     setIsPlaying(!isPlaying);
   };
@@ -175,15 +173,16 @@ const MyComponent = (props) => {
       audio.play();
     }
   }, [songPlayingIndex]);
+  ///////////////////////////////
 
   return (
-    <div style={{ background: "blue", color: "white" }}>
+    <div style={compDiv}>
       <MusicController
         isPlaying={isPlaying}
         onClickPrev={onClickPrevSong}
         onClickNext={onClickNextSong}
         onTogglePlay={onTogglePlaySong}
-        song={songArr[songPlayingIndex]}      
+        song={songArr[songPlayingIndex]}
       />
     </div>
   );
