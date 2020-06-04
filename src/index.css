@@ -7,3 +7,38 @@ body {
   background-size: cover;
   justify-content: center;
 }
+
+.App {
+  
+  height: 100vh;
+  margin-top: 0px;
+  
+
+  -webkit-transition: background-color 2s ease-out;
+  -moz-transition: background-color 2s ease-out;
+  -o-transition: background-color 2s ease-out;
+  transition: background-color 2s ease-out;
+}
+
+.color-selector-box {
+  height: 200px;
+  width: 100px;
+  border-color: red;
+  border-style: solid;
+  text-align: left;
+}
+
+.texture-selector-box {
+  height: 200px;
+  width: 100px;
+  border-color: blue;
+  border-style: solid;
+  text-align: left;
+
+}
+
+.searchbox{
+  margin-top: 300px;
+  position: relative;
+  
+}
